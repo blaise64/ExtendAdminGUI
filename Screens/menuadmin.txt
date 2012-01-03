@@ -1,0 +1,100 @@
+<screens>
+	<main_screen name="Administration" nbcols="1" nbrows="8" info="The top level screen">
+		<linkbutton label="World Change" target="World Change" row="1" col="1"/>
+		<linkbutton label="Worlds Gestion" target="Worlds Gestion" row="2" col="1"/>
+		<linkbutton label="Admin Players" target="Admin Players" row="3" col="1"/>
+		<linkbutton label="WorldEdit" target="WorldEdit" row="4" col="1"/>
+		<linkbutton label="Teleportation" target="Teleportation" row="5" col="1"/>
+		<linkbutton label="Protection" target="Protection" row="6" col="1"/>
+		<linkbutton label="Economy" target="Economy" row="7" col="1"/>
+		<linkbutton label="Items" target="Items" row="8" col="1"/>
+	</main_screen>
+	
+	<screen name="World Change" nbrows="2" nbcols="2">
+		<commandbutton label="Day" command="/time day" stay_open="true" row="1" col="1"/>
+		<commandbutton label="Night" command="/time night" stay_open="true" row="1" col="2"/>
+		<commandbutton label="Sunny" command="/weather sunny" stay_open="true" row="2" col="1"/>
+		<commandbutton label="Stormy" command="/weather stormy" stay_open="true" row="2" col="2"/>
+	</screen>
+
+	<screen name="World Gestion" nbrows="2" nbcols="2">
+		<commandbutton label="Day" command="/time day" stay_open="true" row="1" col="1"/>
+		<commandbutton label="Night" command="/time night" stay_open="true" row="1" col="2"/>
+		<commandbutton label="Sunny" command="/weather sunny" stay_open="true" row="2" col="1"/>
+		<commandbutton label="Stormy" command="/weather stormy" stay_open="true" row="2" col="2"/>
+	</screen>
+	
+	<screen name="WorldEdit" nbrows="2" nbcols="2">
+		<commandbutton label="Day" command="/time day" stay_open="true" row="1" col="1"/>
+		<commandbutton label="Night" command="/time night" stay_open="true" row="1" col="2"/>
+		<commandbutton label="Sunny" command="/weather sunny" stay_open="true" row="2" col="1"/>
+		<commandbutton label="Stormy" command="/weather stormy" stay_open="true" row="2" col="2"/>
+	</screen>
+	
+	<screen name="Admin Players" nbrows="8" nbcols="3">
+		<playerchooser />
+		<playerbox var="player" info="Enter the player to act on" default="player" row="1" col="1" colspan="3"/>
+		<parambox info="Enter the mail" default="" var="mail"  row="2" col="1" colspan="2"/>
+		<commandbutton label="Mail" command="/mail %player% %mail%" row="2" col="3"/>
+		<commandbutton label="Get Pos" command="/getpos %player%" row="3" col="1"/>
+		<commandbutton label="Compass" command="/compass %player%" row="3" col="2"/>
+		<commandbutton label="Depth" command="/depth %player%" row="3" col="3"/>
+		<commandbutton label="God" command="/god %player%" row="4" col="1"/>
+		<commandbutton label="Heal" command="/heal %player%" row="4" col="1"/>
+		<commandbutton label="Set Creative" command="/gamemode %player% 1" row="5" col="1"/>
+		<commandbutton label="Set Survival" command="/gamemode %player% 0" row="5" col="2"/>
+		
+		<commandbutton label="Repair" command="/repair" row="6" col="1"/>
+		<commandbutton label="Enchant" command="/enchant %enchant% %enchant_level%" info="/enchant enchant_name level" row="7" col="1"/>
+		<parambox info="Enchant name" default="" var="enchant"  row="7" col="2"/>
+		<parambox info="Level" default="" var="enchant_level"  row="7" col="3"/>
+		
+		<div row="8" col="1" nbrows="1" nbcols="5" colspan="3" rowspan="1">
+			<commandbutton label="Kick" command="/kick %player%" row="1" col="1"/>
+			<commandbutton label="Clear Inv" command="/clearinventory %player%" row="1" col="2"/>
+			<commandbutton label="Temp Ban" command="/tempban %player%" info="Temporaly Bans a player" row="1" col="3"/>
+			<commandbutton label="Ban" command="/ban %player%" info="Bans a player" row="1" col="4"/>
+			<commandbutton label="Unban" command="/unban %player%" info="unBans a player" row="1" col="5"/>
+		</div>
+	</screen>
+	
+	<screen label="Teleportation" nbrows="6" nbcols="4">
+		<commandbutton label="Set Home" command="/sethome %home%" info="/sethome home_name" row="1" col="2"/>
+		<commandbutton label="Del Home" command="/delhome %home%" info="/delhome home_name" row="1" col="3"/>
+		<commandbutton label="Tp Home" command="/home %home%" info="/home home_name" row="1" col="4"/>
+		<parambox info="Enchant name" default="" var="home"  row="1" col="1"/>
+		
+		<parambox info="Enchant name" default="" var="warp"  row="2" col="1"/>
+		<commandbutton label="Set Warp" command="/setwarp %warp%" info="/setwarp warp_name" row="2" col="2"/>
+		<commandbutton label="Del Warp" command="/delwarp %warp%" info="/delwarp warp_name" row="2" col="3"/>
+		<commandbutton label="Warp" command="/warp %warp%" info="/warp warp_name" row="2" col="4"/>
+		
+		<commandbutton label="Teleport to xyz" command="/tppos %X% %Y% %Z%" info="/tppos x y z" row="3" col="1"/>
+		<parambox info="X" default="" var="X"  row="3" col="2"/>
+		<parambox info="Y" default="" var="Y"  row="3" col="3"/>
+		<parambox info="Z" default="" var="Z"  row="3" col="4"/>
+		
+		<div row="4" col="1" nbrows="2" nbcols="3" colspan="4" rowspan="2">
+			<commandbutton label="Bring here..." command="/tpahere %cible%" row="1" col="2"/>
+			<parambox info="cible" default="" var="cible"  row="1" col="1"/>
+			<commandbutton label="Bring All here..." command="/tpaall" row="1" col="3"/>
+			
+			<commandbutton label="Teleport Player to..." command="/tp %cible% %destination%" row="2" col="1"/>
+			<parambox info="player destination" default="" var="destination"  row="2" col="3"/>
+			<parambox info="cible" default="" var="cible"  row="1" col="2"/>
+		</div>
+		<div row="6" col="1" nbrows="1" nbcols="2" colspan="4" rowspan="1">
+			<commandbutton label="Goto World" command="/world %world%" info="/world world_name" row="1" col="1"/>
+			<parambox info="world cible" default="" var="world"  row="1" col="2"/>
+		</div>
+	</screen>
+	
+	<screen label="Protections" nbrows="8" nbcols="3">
+	</screen>
+	
+	<screen label="Economy" nbrows="8" nbcols="3">
+	</screen>
+	
+	<screen label="Items" nbrows="8" nbcols="3">
+	</screen>
+</screens>
