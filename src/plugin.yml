@@ -9,10 +9,15 @@ commands:
         permission:
         aliases: loadscreen
     reloadscreens:
-        description: Load a screen file
+        description: reload the screens files
         permission:
         aliases: reloadscreens    
     regionscreen:
-        description: Load a screen file
+        description: Load a region screen file
         permission:
         aliases: reloadscreens
+    testscreen:
+        description: Load a test screen file
+        permission:
+        aliases: testscreen
+        

@@ -318,6 +318,38 @@ public class Main extends JavaPlugin
 	            return false;
         	}
         }
+		else if(cmd.getName().equalsIgnoreCase("testscreen"))
+                {
+                	if(args.length!=0)
+                	{
+                		sender.sendMessage((new StringBuilder()).append(ChatColor.RED).append("Bad Use : /tetscreen").toString());
+                		return false;
+                	}
+                	else
+                	{
+                		if(config.getBoolean("show_info"))
+                		{
+             	        	logger.info((new StringBuilder("[ExtendAdminGUI - info] Loading test Screen")).toString());
+             	        	if(sender instanceof SpoutPlayer)
+        	            	{
+        	            		SpoutPlayer user = (SpoutPlayer)sender;
+        	            		if(user.getMainScreen().getActivePopup() != null)
+        	            		{
+        	            			user.getMainScreen().closePopup();
+        	            		}
+        	                    else
+        	                    {
+        	                    	if(user.getActiveScreen() == ScreenType.GAME_SCREEN || user.getActiveScreen() == ScreenType.CUSTOM_SCREEN || user.getActiveScreen() == ScreenType.CHAT_SCREEN)
+        	                    		new TestGUI(user, this);
+        	                    }
+        	            	}
+        	       return true;
+        	    }
+	            if(sender instanceof Player)
+	                sender.sendMessage((new StringBuilder()).append(ChatColor.RED).append("Load Failed - Check your layout files!").toString());
+	            return false;
+        	}
+        }
         else
         {
             return false;

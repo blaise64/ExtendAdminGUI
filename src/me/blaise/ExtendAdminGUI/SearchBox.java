@@ -7,11 +7,11 @@ import org.getspout.spoutapi.gui.GenericTextField;
 public class SearchBox extends GenericTextField
 {
 
-    public Finder parent;
+    public Navigable parent;
     public int id;
     public String var;
     
-    public SearchBox(Finder parent)
+    public SearchBox(Navigable parent)
     {
     	this.parent=parent;
     }
@@ -20,6 +20,6 @@ public class SearchBox extends GenericTextField
     {
     	this.setFocus(true);
     	this.text=event.getNewText();
-    	this.parent.onTextChange(this.text);
+    	this.parent.search();
     }
 }

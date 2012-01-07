@@ -4,30 +4,24 @@ import java.util.ArrayList;
 
 import org.getspout.spoutapi.gui.ContainerType;
 import org.getspout.spoutapi.gui.GenericContainer;
+import org.getspout.spoutapi.gui.GenericListWidget;
+import org.getspout.spoutapi.gui.ListWidgetItem;
 
 public class Finder extends GenericContainer implements Navigable, Chooser {
 	private ArrayList<String> choices;
 	private Chooser parent;
 	private SearchBox search;
-	private GridContainer grid;
-	private int index;
-	private int nbrows=5;
-	private int nbcols=2;
-	private int colwidth=60;
-	private int rowheight=20;
-	private NavButton next;
-	private NavButton prev;
-	private GenericContainer nav;
 	private ArrayList<String> matches;
 	private String var;
+	GenericListWidget list;
 
 	public Finder(Chooser parent, String var, ArrayList<String> choicesList){
 		this.parent=parent;
 		this.var=var;
 		this.choices=new ArrayList<String>(choicesList);
 		this.matches=new ArrayList<String>(choices);
-		index=0;
 		this.draw();
+		this.drawButton();
 	}
 	
 	public Finder(Chooser parent, String var){
@@ -35,7 +29,6 @@ public class Finder extends GenericContainer implements Navigable, Chooser {
 		this.var=var;
 		this.choices=new ArrayList<String>();
 		this.matches=new ArrayList<String>(choices);
-		index=0;
 		this.draw();
 	}	
 	
@@ -64,35 +57,17 @@ public class Finder extends GenericContainer implements Navigable, Chooser {
 	}
 	
 	private void draw(){
-		this.nav=new GenericContainer();
-		this.nav.setLayout(ContainerType.HORIZONTAL);
-		this.nav.setFixed(true);
-		this.nav.setHeight(rowheight);
-		this.nav.setWidth(nbcols*colwidth);
 		
 		this.search=new SearchBox(this);
-		this.search.setHeight(15);
-		this.search.setWidth(nbcols*colwidth-25*2);
-		this.search.setMargin(0);
-		this.search.setFixed(true);
+		this.search.setMaxHeight(15);
 		
-		this.next=new NavButton(">>",NavButton.NavButtonType.NEXT,this);
-		this.next.setWidth(15);
-		this.next.setHeight(15);
-		this.next.setFixed(true);
+		this.list = new ChoosableListWidget(this, this.var);
+		this.list.setMargin(0);
+		this.list.setMarginTop(5);
 		
-		this.prev=new NavButton("<<",NavButton.NavButtonType.PREV,this);
-		this.prev.setWidth(15);
-		this.prev.setHeight(15);
-		this.prev.setFixed(true);
-		
-		this.nav.addChildren(this.prev, this.search, this.next);
-		
-		this.grid= new GridContainer(nbrows, nbcols, colwidth, rowheight);
-		this.drawButton();
 		this.setLayout(ContainerType.VERTICAL);
-		//this.setHeight(300).setWidth(120);
-		this.addChildren(this.nav, this.grid);
+		this.setMargin(5);		//this.setHeight(300).setWidth(120);
+		this.addChildren(this.search, this.list);
 		
 	}
 	
@@ -103,36 +78,25 @@ public class Finder extends GenericContainer implements Navigable, Chooser {
 			if(this.choices.get(i).contains(pattern)||pattern.equalsIgnoreCase(""))
 				matches.add(this.choices.get(i));
 		}
-		this.grid.clear();
-		for(int i=10*index; (i<matches.size()) && (i<10*(1+index));i++){
-			this.grid.put(new ChoiceButton(this.var, matches.get(i), this));
+		this.list.clear();
+		for(int i=0; i<this.matches.size();i++){
+			 this.list.addItem(new ListWidgetItem(this.matches.get(i), this.matches.get(i)));
 		}
 	}
 
-	public void onTextChange(String text) {
-		this.index=0;
-		this.drawButton();
-	}
+
 
 	@Override
 	public void navigateNext() {
-		if(index<(matches.size()/10)){
-			++index;
-			this.drawButton();
-		}
 	}
 
 	@Override
 	public void navigatePrevious() {
-		if(index>0){
-			--index;
-			this.drawButton();
-		}
 	}
 
 	@Override
 	public void search() {
-		
+		this.drawButton();
 	}
 
 }

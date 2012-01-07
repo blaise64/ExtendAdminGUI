@@ -179,7 +179,9 @@ public class RegionGUI implements Chooser, CanExecuteFonction
 		this.container2.addChildren(this.container6, this.container3);
 		
         this.worldchooser = new Finder(this, "world", this.worldsNames);
+        this.worldchooser.setHeight(80).setWidth(120).setFixed(true);
         this.regionchooser = new Finder(this, "region", this.regionsNames);
+        this.regionchooser.setHeight(80).setWidth(120).setFixed(true);
         
         this.container1.addChildren(this.worldchooser, this.regionchooser);
         this.container.addChildren(this.container1, this.container2);
