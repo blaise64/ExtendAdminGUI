@@ -58,15 +58,15 @@ public class Main extends JavaPlugin
     	
         
         PluginManager pm = getServer().getPluginManager();
-        ArrayList<String> plugins = new ArrayList<String>();
-        Plugin aplugin[];
-        
-        int j = (aplugin = pm.getPlugins()).length;
-        for(int i = 0; i < j; i++)
-        {
-            Plugin p = aplugin[i];
-            plugins.add(p.getDescription().getName());
-        }
+//        ArrayList<String> plugins = new ArrayList<String>();
+//        Plugin aplugin[];
+//        
+//        int j = (aplugin = pm.getPlugins()).length;
+//        for(int i = 0; i < j; i++)
+//        {
+//            Plugin p = aplugin[i];
+//            plugins.add(p.getDescription().getName());
+//        }
         logger = getServer().getLogger();
         
       //Loading Vault
