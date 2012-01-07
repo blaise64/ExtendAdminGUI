@@ -1,7 +1,7 @@
 name: ExtendAdminGUI
 version: 1.0
 author: blaise64
-main: me.blaise.ExtendAdminGUI.Main
+main: me.blaise.ExtendAdminGUI.ExtendAdminGUIMain
 depend: [Spout]
 commands:
     loadscreen:
