@@ -65,8 +65,15 @@ public class TestGUI implements Chooser
         this.container.setX(0).setY(10);
         this.container.setHeight(60).setWidth(120).setFixed(true);
         
-        this.worldchooser = new Finder(this, "world", this.worldsNames);
-        this.container.addChildren(this.worldchooser);
+        //this.worldchooser = new Finder(this, "world", this.worldsNames);
+        //this.container.addChildren(this.worldchooser);
+        CorrectedTextField test=new CorrectedTextField();
+        test.setHeight(15).setWidth((222*this.user.getMainScreen().getWidth())/1280).setFixed(true);
+        this.container.addChildren(test);
+        
+        GenericButton b=new GenericButton("Reload Menu2");
+        b.setHeight(15).setWidth(100).setFixed(true);
+        this.container.addChildren(b);
 
         this.GUI.attachWidget(instance, this.container);
         this.user.getMainScreen().attachPopupScreen(GUI);

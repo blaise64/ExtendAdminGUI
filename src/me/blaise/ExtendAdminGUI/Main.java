@@ -5,8 +5,6 @@
 
 package me.blaise.ExtendAdminGUI;
 
-import com.nijiko.permissions.PermissionHandler;
-import com.nijikokun.bukkit.Permissions.Permissions;
 import java.io.File;
 import java.util.*;
 import java.util.logging.Logger;
@@ -23,11 +21,17 @@ import org.getspout.spoutapi.gui.ScreenType;
 import org.getspout.spoutapi.player.SpoutPlayer;
 import org.w3c.dom.*;
 
+import net.milkbowl.vault.Vault;
+import net.milkbowl.vault.economy.EconomyResponse;
+
+//TODO: verifier les eprmissions
+
 //TODO: GŽrer les clear
 public class Main extends JavaPlugin
 {
 
     
+	private Vault vault=null;
 	public Main()
     {
         config = null;
@@ -48,7 +52,11 @@ public class Main extends JavaPlugin
 
     public void onEnable()
     {
-        setupConfig();
+        
+    	setupConfig();
+        
+    	
+        
         PluginManager pm = getServer().getPluginManager();
         ArrayList<String> plugins = new ArrayList<String>();
         Plugin aplugin[];
@@ -61,33 +69,20 @@ public class Main extends JavaPlugin
         }
         logger = getServer().getLogger();
         
-        //Dealing with permissions plugins
-        if(config.getBoolean("show_info"))
-            checkDefaults();
-        if(plugins.contains("PermissionsBukkit"))
-        {
-            if(config.getBoolean("show_info"))
-                logger.info("[ExtendAdminGUI - info] Using PermissionsBukkit!");
-            permissionsPlugin = 0;
-        }
-        if(plugins.contains("PermissionsEx"))
-        {
-            if(config.getBoolean("show_info"))
-                logger.info("[ExtendAdminGUI - info] Using PermissionsEx!");
-            permissionsPlugin = 0;
-        }
-        if(plugins.contains("bPermissions"))
-        {
-            if(config.getBoolean("show_info"))
-                logger.info("[ExtendAdminGUI - info] Using bPermissions!");
-            permissionsPlugin = 0;
-        }
-        if(plugins.contains("Permissions"))
-        {
-            if(config.getBoolean("show_info"))
-                logger.info("[ExtendAdminGUI - info] Using Permissions!");
-            setupPermissions();
-            permissionsPlugin = 1;
+      //Loading Vault
+    	Plugin x = this.getServer().getPluginManager().getPlugin("Vault");
+        if(x != null & x instanceof Vault) {
+            vault = (Vault) x;
+            logger.info(String.format("[%s] Enabled Version %s", getDescription().getName(), getDescription().getVersion()));
+        } else {
+            /**
+             * Throw error & disable because we have Vault set as a dependency, you could give a download link
+             * or even download it for the user.  This is all up to you as a developer to decide the best option
+             * for your users!  For our example, we assume that our audience (developers) can find the Vault
+             * plugin and properly install it.  It's usually a bad idea however.
+             */
+            logger.warning(String.format("[%s] Vault was _NOT_ found! Disabling plugin.", getDescription().getName()));
+            getPluginLoader().disablePlugin(this);
         }
         
         //loading of the screen
@@ -230,6 +225,7 @@ public class Main extends JavaPlugin
 
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String args[])
     {
+    	//if(vault.perms.hasPermission(sender, "example.plugin.awesome", false))
         if(cmd.getName().equalsIgnoreCase("loadscreen"))
         {
         	if(args.length!=1)
@@ -356,23 +352,6 @@ public class Main extends JavaPlugin
         }
     }
 
-    private void setupPermissions()
-    {
-        if(permissionHandler != null)
-            return;
-        Plugin permissionsPlugin = getServer().getPluginManager().getPlugin("Permissions");
-        if(permissionsPlugin == null)
-        {
-            logger.info("Permission system not detected, defaulting to OP");
-            return;
-        } else
-        {
-            permissionHandler = ((Permissions)permissionsPlugin).getHandler();
-            logger.info((new StringBuilder("Found and will use plugin ")).append(((Permissions)permissionsPlugin).getDescription().getFullName()).toString());
-            return;
-        }
-    }
-
     public void onDisable()
     {
         config = null;
@@ -383,7 +362,6 @@ public class Main extends JavaPlugin
     }
 
     public FileConfiguration config;
-    public static PermissionHandler permissionHandler;
     //public HashMap<String, ExtendAdminGUI> opened_gui;
     public int permissionsPlugin;
     private Logger logger;
