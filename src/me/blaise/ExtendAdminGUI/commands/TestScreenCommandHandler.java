@@ -33,7 +33,7 @@ public class TestScreenCommandHandler extends AbstractCommandHandler {
         	}
         	else
         	{
-    			CustomPlugin.doLog("Loading test Screen", Level.INFO);
+    			CustomPlugin.doLog("Loading test Screen", Level.FINEST);
     			if(sender instanceof SpoutPlayer)
             	{
             		SpoutPlayer user = (SpoutPlayer)sender;

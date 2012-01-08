@@ -102,7 +102,7 @@ public class ExtendAdminGUIMain extends CustomPlugin
 	        File dir = new File(loc);
 	        
 	        //if(config.getBoolean("show_info"))
-	            doLog("Screens folder is "+dir.getAbsolutePath(),Level.INFO);
+	            doLog("Screens folder is "+dir.getAbsolutePath(),Level.FINE);
 	        
 	        children = dir.list();
 	        if(children.length == 0)
@@ -111,7 +111,7 @@ public class ExtendAdminGUIMain extends CustomPlugin
 	        	return false;
 	        }
 	        //if(config.getBoolean("show_info"))
-	            doLog("Found "+Integer.toString(children.length)+" screen files.", Level.INFO);
+	            doLog("Found "+Integer.toString(children.length)+" screen files.", Level.FINE);
 	        for(int i = 0; i < children.length; i++)
         	{
 	        	Document doc=this.loadScreen(loc, children[i]);
@@ -124,7 +124,7 @@ public class ExtendAdminGUIMain extends CustomPlugin
 					s=s.toLowerCase();
 					this.screens.put(s,doc);
 					//if(config.getBoolean("show_info"))
-						doLog("Screen "+children[i]+" loaded as "+s, Level.INFO);
+						doLog("Screen "+children[i]+" loaded as "+s, Level.FINE);
 	             }
 	        	 else
 	        	 {
@@ -148,13 +148,13 @@ public class ExtendAdminGUIMain extends CustomPlugin
     	try
     	{
         	//if(config.getBoolean("show_info"))
-	            doLog("Screen "+screen_name+" found. trying to load it.",Level.INFO);
+	            doLog("Screen "+screen_name+" found. trying to load it.",Level.FINE);
         	
         	DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
  	        Document screen = factory.newDocumentBuilder().parse(new File((new StringBuilder(String.valueOf(location))).append(screen_name).toString()));
  	        screen.getDocumentElement().normalize();
  	       // if(config.getBoolean("show_info"))
- 	        	doLog("Screen "+screen_name+" parsed", Level.INFO);
+ 	        	doLog("Screen "+screen_name+" parsed", Level.FINE);
  	        return screen;
         }
         catch(Exception ne)

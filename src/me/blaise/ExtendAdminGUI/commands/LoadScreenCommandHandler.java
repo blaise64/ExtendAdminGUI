@@ -49,7 +49,7 @@ public class LoadScreenCommandHandler extends AbstractCommandHandler {
 	                    		new ExtendAdminGUI(((ExtendAdminGUIMain)ExtendAdminGUIMain.getInstance()).getScreens().get(args[0].toLowerCase()), user, this.plugin );
 	                    }
 	            	}
-        	        ExtendAdminGUIMain.doLog("Screen "+args[0]+" loaded by "+sender.getName(),Level.INFO);
+        	        ExtendAdminGUIMain.doLog("Screen "+args[0]+" loaded by "+sender.getName(),Level.FINEST);
                 	return true;
 	            }
 	            if(sender instanceof Player)

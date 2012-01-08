@@ -35,7 +35,7 @@ public abstract class AbstractCommandHandler {
 	
 	public static void registerHandler(AbstractCommandHandler handler) {
 		handlers.put(handler.getCommandLabel(), handler);
-		CustomPlugin.doLog("Registered Command "+handler.getCommandLabel(), Level.INFO);
+		CustomPlugin.doLog("Registered Command "+handler.getCommandLabel(), Level.FINEST);
 	}
 	
 	public static void printAllHelp(CommandSender sender) {

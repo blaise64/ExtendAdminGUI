@@ -1,52 +1,33 @@
 package me.blaise.lib.main;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.jar.JarFile;
 import java.util.logging.Level;
-import java.util.zip.ZipEntry;
 
 import me.blaise.lib.command.AbstractCommandHandler;
 import me.blaise.lib.configuration.CustomConfigurationManager;
 import net.milkbowl.vault.Vault;
+import net.milkbowl.vault.chat.Chat;
+import net.milkbowl.vault.permission.Permission;
+import net.milkbowl.vault.economy.Economy;
 
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.World;
-import org.bukkit.World.Environment;
-import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
-import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
-//import org.yaml.snakeyaml.Yaml;
 
 
 public abstract class CustomPlugin extends JavaPlugin {
-	private static CustomPlugin instance;
-	private CustomConfigurationManager config;
-	private Vault vault;
+	protected static CustomPlugin instance;
+	protected CustomConfigurationManager configManager;
+	protected Vault vault;
 	
     /**
      * Construct objects. Actual loading occurs when the plugin is enabled, so
      * this merely instantiates the objects.
      */
     public CustomPlugin() {
-        this.config = new CustomConfigurationManager(this);
         this.instance = this;
     }
 
@@ -54,24 +35,17 @@ public abstract class CustomPlugin extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		instance = this;
-		
-		CustomPlugin.doLog("Enable started", Level.FINE);
-		
+		CustomPlugin.doLog("Enable started", Level.INFO);
 		//Load the configuration from the config file
-		config = new CustomConfigurationManager(this);
-		
+		configManager = new CustomConfigurationManager(this);
 		//Handle dependencies
 		loadDependencies();
-		
 		//Register event
         registerEvents();
-		
 		//Register commands
         registerCommands();
-		
 		//Load saved stuff
 		load();
-		
 		printStatus(true);
 	}
 	
@@ -80,11 +54,15 @@ public abstract class CustomPlugin extends JavaPlugin {
     	Plugin x = this.getServer().getPluginManager().getPlugin("Vault");
         if(x != null & x instanceof Vault) {
             vault = (Vault) x;
-            doLog(String.format(" Vault found and enable - Version %s", getDescription().getVersion()), Level.INFO);
+            doLog(String.format(" Vault found and enable - Version %s", getDescription().getVersion()), Level.FINE);
         } else {
             doLog(String.format("Vault was _NOT_ found! Disabling plugin."), Level.WARNING);
             getPluginLoader().disablePlugin(this);
         }
+        
+        setupPermissions();
+        setupEconomy();
+        setupChat();
 	}
 
 
@@ -242,9 +220,9 @@ public abstract class CustomPlugin extends JavaPlugin {
 	 * @param msg
 	 */
 	public static void doLog(String msg, Level level) {
-//		if(level.intValue() < getConfig().getMinimumLogLevel()){
-//			return;
-//		}
+		if(level.intValue() < getCustomConfig().getMinimumLogLevel()){
+			return;
+		}
 		String print = "[";
 		ChatColor color = ChatColor.BLACK;
 		if(level.equals(Level.SEVERE)) {
@@ -300,8 +278,39 @@ public abstract class CustomPlugin extends JavaPlugin {
 	}
 	
 	public static CustomConfigurationManager getCustomConfig(){
-		return instance.config;
+		return instance.configManager;
 	}
 
-    
+	public static Permission permission = null;
+	    public static Economy economy = null;
+	    public static Chat chat = null;
+
+	    private Boolean setupPermissions()
+	    {
+	        RegisteredServiceProvider<Permission> permissionProvider = getServer().getServicesManager().getRegistration(net.milkbowl.vault.permission.Permission.class);
+	        if (permissionProvider != null) {
+	            permission = permissionProvider.getProvider();
+	        }
+	        return (permission != null);
+	    }
+
+	    private Boolean setupChat()
+	    {
+	        RegisteredServiceProvider<Chat> chatProvider = getServer().getServicesManager().getRegistration(net.milkbowl.vault.chat.Chat.class);
+	        if (chatProvider != null) {
+	            chat = chatProvider.getProvider();
+	        }
+
+	        return (chat != null);
+	    }
+
+	    private Boolean setupEconomy()
+	    {
+	        RegisteredServiceProvider<Economy> economyProvider = getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
+	        if (economyProvider != null) {
+	            economy = economyProvider.getProvider();
+	        }
+
+	        return (economy != null);
+	    }
 }

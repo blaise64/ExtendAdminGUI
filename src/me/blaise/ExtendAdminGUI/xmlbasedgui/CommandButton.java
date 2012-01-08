@@ -181,7 +181,7 @@ public class CommandButton extends GenericButton
 			user.chat(s); //execute command in the chat
 			//debug
 			//if(this.app_root.plugin.config.getBoolean("debug_mode"))
-				CustomPlugin.doLog(""+user.getName()+" executed the command/chat '"+s+"'", Level.INFO);
+				CustomPlugin.doLog(""+user.getName()+" executed the command/chat '"+s+"'", Level.FINEST);
 			i++;
 		}
 		//close the GUI

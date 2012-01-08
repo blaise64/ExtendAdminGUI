@@ -78,7 +78,7 @@ public class ExtendAdminGUI
 		}
         
         //if(this.plugin.config.getBoolean("debug_mode"))
-        	CustomPlugin.doLog("Opened a GUI for "+user.getName(),Level.INFO);
+        	CustomPlugin.doLog("Opened a GUI for "+user.getName(),Level.FINEST);
         
 		//TODO: a method getMainScreen
 		NodeList listmain = this.doc.getElementsByTagName("main_screen");
@@ -91,7 +91,7 @@ public class ExtendAdminGUI
 		else
 		{
 			// if(this.plugin.config.getBoolean("debug_mode"))
-		        	CustomPlugin.doLog("No main screen", Level.INFO);
+		        	CustomPlugin.doLog("No main screen", Level.FINEST);
 			 return;
 		}
 		this.user.getMainScreen().attachPopupScreen(GUI);
@@ -117,7 +117,7 @@ public class ExtendAdminGUI
     private void setPanel(GenericContainer panel)
     {
     	//if(this.plugin.config.getBoolean("debug_mode"))
-               CustomPlugin.doLog("Changing Screen",Level.INFO);
+               CustomPlugin.doLog("Changing Screen",Level.FINEST);
     	//this.user.getMainScreen().closePopup();
         this.GUI.attachWidget(this.plugin, panel);
     }
@@ -155,7 +155,7 @@ public class ExtendAdminGUI
     
 	public String getParamValue(String param) {
 		//if(this.plugin.config.getBoolean("debug_mode"))
-    		CustomPlugin.doLog("request for parameter"+param, Level.INFO);
+    		CustomPlugin.doLog("request for parameter"+param, Level.FINEST);
 		if(this.parameters.containsKey(param))
 			return this.parameters.get(param).getText();
 		else 

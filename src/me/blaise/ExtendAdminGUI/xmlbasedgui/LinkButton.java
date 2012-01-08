@@ -136,6 +136,6 @@ public class LinkButton extends GenericButton{
 		this.app_root.goTo(target);
 		//debug
 		//if(this.app_root.plugin.config.getBoolean("debug_mode"))
-			CustomPlugin.doLog("going to screen "+target, Level.INFO);
+			CustomPlugin.doLog("going to screen "+target, Level.FINEST);
 	}
 }

@@ -32,7 +32,7 @@ public class RegionScreenCommandHandler extends AbstractCommandHandler {
         	}
         	else
         	{
- 	        	CustomPlugin.doLog("Loading region Screen", Level.INFO);
+ 	        	CustomPlugin.doLog("Loading region Screen", Level.FINEST);
  	        	if(sender instanceof SpoutPlayer)
             	{
             		SpoutPlayer user = (SpoutPlayer)sender;
